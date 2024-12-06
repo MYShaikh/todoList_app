@@ -1,0 +1,73 @@
+{% extends "common/to_do_common.html" %}
+{% block content %}
+
+<style>
+  /* Body Styling */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Container Styling */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    display: flex;
+    justify-content: center; /* Horizontally center all items */
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center items inside the container */
+    height: 100vh;
+  }
+
+  /* Button Styling */
+  .btnnn, .btnnn2 {
+    width: 300px; /* Fixed width for buttons */
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px; /* Space between buttons */
+  }
+
+  /* Primary Button Styling */
+  .btnnn {
+    background-color: #007bff; /* Blue */
+    color: white;
+  }
+
+  .btnnn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Secondary Button Styling */
+  .btnnn2 {
+    background-color: #6c757d; /* Gray */
+    color: white;
+  }
+
+  .btnnn2:hover {
+    background-color: #5a6268; /* Darker gray on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Responsive Design for smaller screens */
+  @media (max-width: 767px) {
+    .btnnn, .btnnn2 {
+      width: 90%; /* Buttons take up 90% of the screen on small devices */
+    }
+  }
+</style>
+
+<div class="container">
+  <button type="button" class="btnnn" onclick="window.location.href='{% url 'todoadd' %}'">Add To-do</button>
+</div>
+
+{% endblock content %}

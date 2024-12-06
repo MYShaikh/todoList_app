@@ -1,0 +1,33 @@
+{% extends "common/to_do_common.html" %}
+
+{% block content %}
+<div class="container">
+    <form method="POST" action="{% url 'taskedit' task_id=task.id %}">
+        {% csrf_token %}
+        <div class="py-4 px-3 mx-auto" style="max-width: 600px;">
+            <h1 class="text-center mb-4">Edit Your Note</h1>
+
+            <!-- Title Input -->
+            <div class="mb-3">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text" id="inputGroup-sizing-lg">Title</span>
+                    <input name="title" type="text" value="{{ task.title }}" class="form-control" placeholder="Task title" aria-label="Task Title" required>
+                </div>
+            </div>
+
+            <!-- Description Input -->
+            <div class="mb-3">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text" id="inputGroup-sizing-lg">Description</span>
+                    <textarea name="desc" rows="4" class="form-control" placeholder="Details of the task" aria-label="Task Description" required>{{ task.desc }}</textarea>
+                </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg w-100">Save Changes</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

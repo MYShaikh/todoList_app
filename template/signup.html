@@ -1,0 +1,132 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Site{% endblock %}</title>
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/homepagestyle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'homepagestyle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'static/css/style.css' %}">
+
+    <style>
+        /* Ensure body and html take up full height */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Flexbox for centering the form in the middle of the page */
+        .center-button1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;  /* Full height */
+            background-color: #f8f9fa; /* Background color for the page */
+        }
+
+        .form-container {
+            max-width: 400px;  /* Max width of the form */
+            width: 100%;  /* Ensure form width doesn't exceed the screen size */
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style inputs */
+        .form-outline input {
+            height: 50px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .form-outline label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Submit Button Styling */
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 0;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+{% block content %}
+<div class="center-button1">
+    <div class="form-container">
+        <form method="post">
+            {% csrf_token %}
+            <!-- Username input -->
+            <div data-mdb-input-init class="form-outline mb-4">
+                <input name="username" type="text" id="form2Example1" class="form-control" placeholder="Enter your username" />
+            </div>
+
+            <!-- Email input -->
+            <div data-mdb-input-init class="form-outline mb-4">
+                <input name="email" type="email" id="form2Example1" class="form-control" placeholder="Enter a valid Email" />
+            </div>
+            
+            <!-- Password input -->
+            <div data-mdb-input-init class="form-outline mb-4">
+                <input name="password" type="password" id="form2Example2" class="form-control" placeholder="Enter your password" />
+            </div>
+
+            <!-- Submit button -->
+            <div class="text-center">
+                <input type="submit" class="btn btn-primary btn-block mb-4" />
+            </div>
+
+            <!-- Register button -->
+            <div class="text-center">
+                <p>Already a member? <a href="{% url 'loginview' %}" class="link-danger">Log in</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+<!-- Footer Section -->
+<div class="footer">
+    <p>Copyright © 2024. All rights reserved.</p>
+</div>
+
+</body>
+</html>

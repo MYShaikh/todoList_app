@@ -1,0 +1,240 @@
+{% extends "common/to_do_common.html" %}
+{% block content %}
+
+<style>
+    /* Body and Table Styling */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px;
+    }
+
+    /* Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #007bff;
+        color: white;
+        font-size: 1.2em;
+        text-transform: uppercase;
+    }
+
+    td {
+        font-size: 1em;
+        color: #333;
+    }
+
+    /* Caption for the table */
+    caption {
+        font-size: 1.5em;
+        text-align: left;
+        padding: 10px;
+        background-color: #f2f2f2;
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* Action Button Styling */
+    .action-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 1em;
+        text-align: center;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 10px; /* Increased margin between buttons */
+        width: 120px; /* Uniform width for all buttons */
+    }
+
+    .View {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .View:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+    .Edit {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .Edit:hover {
+        background-color: #218838;
+        transform: scale(1.05);
+    }
+
+    .Delete {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .Delete:hover {
+        background-color: #c82333;
+        transform: scale(1.05);
+    }
+
+    .cen {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+    }
+
+    .pagination li {
+        margin: 0 5px;
+    }
+
+    .pagination .page-item.active a {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .pagination .page-item a {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        color: #007bff;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    .pagination .page-item a:hover {
+        background-color: #007bff;
+        color: white;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 767px) {
+        table {
+            width: 100%;
+            font-size: 0.9em;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+
+        .action-btn {
+            padding: 8px 16px; /* Slightly smaller padding on smaller screens */
+            width: 100px; /* Adjust width for smaller screens */
+        }
+    }
+</style>
+
+<div class="container">
+    <br><br>
+    <div class="cen">
+        <!-- Table to Display To-Do List -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for todo in obj %}
+                {% if todo.is_completed == True %}
+                    <tr>
+                        <td>{{ todo.title }}</td>
+                        <td>{{ todo.desc }}</td>
+                        <td>
+                            <input type="checkbox" checked disabled >
+                        </td>
+                        <td>
+                            <!-- Action Buttons -->
+                            <form method="post" action="{% url 'todolist' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="task_id" value="{{ todo.id }}">
+                                <button class="action-btn View" type="submit" name="view_task" value="view_task">
+                                    View
+                                </button>
+                            </form>
+
+                            <a href="{% url 'taskedit' task_id=todo.id %}" class="action-btn Edit">Edit</a>
+
+                            <form method="POST" action="{% url 'deletetask' task_id=todo.id %}">
+                                {% csrf_token %}
+                                <button class="action-btn Delete" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">No tasks found.</td>
+                    </tr>
+                
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center">
+        <ul class="pagination">
+            {% if obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1" aria-label="First">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+            
+            {% for num in obj.paginator.page_range %}
+                <li class="page-item {% if obj.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+            {% endfor %}
+            
+            {% if obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ obj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ obj.paginator.num_pages }}" aria-label="Last">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+{% endblock content %}

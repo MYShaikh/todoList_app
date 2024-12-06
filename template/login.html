@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/homepagestyle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <title>Sign In</title>
+    
+    <!-- Adding custom styling for better visual appeal -->
+    <style>
+        /* Set body and section to take full height of the viewport */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Centering the form vertically and horizontally using flexbox */
+        section.vh-100 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;  /* Full viewport height */
+            background-color: #f8f9fa; /* Light background color */
+        }
+
+        .center-button1 {
+            max-width: 400px; /* Maximum width for the form */
+            width: 100%;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form Inputs Styling */
+        .form-outline input, .form-outline textarea {
+            height: 50px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .form-outline textarea {
+            resize: vertical;
+        }
+
+        .form-outline label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Submit Button Styling */
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer Styling */
+        .bg-primary {
+            background-color: #007bff !important;
+        }
+
+        .footer-icons i {
+            font-size: 20px;
+            margin: 0 10px;
+            color: white;
+        }
+
+        .footer-icons a:hover {
+            color: #f1f1f1;
+        }
+
+        .text-white {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+{% block content %}
+<section class="vh-100">
+    <div class="container-fluid h-100 d-flex justify-content-center align-items-center">
+        <!-- Sign-in Form -->
+        <div class="center-button1">
+            <form method="post">
+                {% csrf_token %}
+                <h1 class="text-center mb-4">Sign In</h1>
+                
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                    <input name="email" type="email" id="form3Example3" class="form-control form-control-lg" placeholder="Enter a valid email address" required />
+                    <label class="form-label" for="form3Example3"></label>
+                </div>
+                
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                    <input name="password" type="password" id="form3Example4" class="form-control form-control-lg" placeholder="Enter password" required />
+                    <label class="form-label" for="form3Example4"></label>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Sign In" />
+                </div>
+
+                <!-- Register Link -->
+                <p class="small fw-bold mt-2 pt-1 mb-0 text-center">Don't have an account? <a href="{% url 'signupview' %}" class="link-danger">Register</a></p>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Footer Section -->
+<div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
+    <!-- Copyright -->
+    <div class="text-white mb-3 mb-md-0">
+        Copyright © 2024. All rights reserved.
+    </div>
+
+    <!-- Footer Social Links -->
+    <div class="footer-icons">
+        <a href="#!" class="text-white me-4">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#!" class="text-white me-4">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#!" class="text-white me-4">
+            <i class="fab fa-google"></i>
+        </a>
+        <a href="#!" class="text-white">
+            <i class="fab fa-linkedin-in"></i>
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+</body>
+</html>
